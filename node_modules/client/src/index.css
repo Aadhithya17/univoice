@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans transition-colors duration-200 antialiased;
+    background-color: #000000; /* Pure black minimalist background */
+    color: #f3f4f6; /* Default gray-100 */
+  }
+
+  body.light-theme {
+    background-color: #ffffff; /* Pure white minimalist background */
+    color: #0f172a; /* Slate-900 */
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-800 hover:bg-slate-700;
+  }
+  body.light-theme ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 hover:bg-slate-400;
+  }
+}
+
+/* Premium micro-animations & custom classes */
+.glass-panel {
+  @apply backdrop-blur-md bg-black/60 border border-slate-900;
+}
+
+body.light-theme .glass-panel {
+  @apply bg-white/70 border-slate-200/80;
+}
+
+.input-field {
+  @apply w-full px-4 py-2 bg-slate-950/80 border border-slate-850 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-all duration-200;
+}
+
+body.light-theme .input-field {
+  @apply bg-white border-slate-200 text-slate-900 placeholder-slate-400 focus:ring-brand-500 focus:border-brand-500;
+}
+
+.btn-primary {
+  @apply px-4 py-2 bg-white text-black rounded-lg font-medium hover:bg-neutral-200 hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-500/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+body.light-theme .btn-primary {
+  @apply bg-black text-white hover:bg-neutral-800 hover:text-white;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 bg-slate-850 hover:bg-slate-800 border border-slate-800 rounded-lg font-medium text-slate-300 transition-all duration-200;
+}
+
+body.light-theme .btn-secondary {
+  @apply bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700;
+}
+
+/* Nested comments border decoration */
+.thread-line::before {
+  content: '';
+  @apply absolute left-0 top-2 bottom-2 w-[1.5px] bg-slate-800 hover:bg-brand-500 transition-colors duration-200 cursor-pointer;
+}
+
+body.light-theme .thread-line::before {
+  @apply bg-slate-200 hover:bg-brand-500;
+}

@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const postController_1 = require("../controllers/postController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const uploadMiddleware_1 = require("../middleware/uploadMiddleware");
+const router = (0, express_1.Router)();
+router.get('/', postController_1.getPosts);
+router.get('/:id', postController_1.getPostById);
+router.post('/', authMiddleware_1.protect, uploadMiddleware_1.upload.single('image'), postController_1.createPost);
+router.put('/:id/vote', authMiddleware_1.protect, postController_1.votePost);
+router.put('/:id/react', authMiddleware_1.protect, postController_1.reactPost);
+router.delete('/:id', authMiddleware_1.protect, postController_1.deletePost);
+exports.default = router;
