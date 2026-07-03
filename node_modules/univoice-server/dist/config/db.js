@@ -6,10 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDB = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const User_1 = require("../models/User");
+const dns_1 = __importDefault(require("dns"));
+// Force Google DNS to avoid ENOTFOUND drops on Windows (Node.js v24 compatibility)
+dns_1.default.setServers(['8.8.8.8', '1.1.1.1']);
 const connectDB = async () => {
     try {
         const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/univoice';
-        const conn = await mongoose_1.default.connect(mongoUri);
+        const conn = await mongoose_1.default.connect(mongoUri, {
+            serverSelectionTimeoutMS: 30000,
+            socketTimeoutMS: 45000,
+            tls: true,
+            tlsAllowInvalidCertificates: true, // Fix for Node.js v24 + OpenSSL TLS alert 80
+        });
         console.log(`MongoDB Connected: ${conn.connection.host}`);
         // Seed specific Admin user if not exists
         const adminEmail = 'admin@univoice.edu';
