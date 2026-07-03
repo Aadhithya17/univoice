@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, CookieOptions } from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 import { signupSchema, loginSchema } from '../utils/validators';
@@ -16,11 +16,11 @@ const generateToken = (id: string, role: string) => {
 const sendTokenResponse = (user: any, statusCode: number, res: Response) => {
   const token = generateToken(user._id, user.role);
 
-  const cookieOptions = {
+  const cookieOptions: CookieOptions = {
     expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
     httpOnly: true,
     secure: NODE_ENV === 'production',
-    sameSite: (NODE_ENV === 'production' ? 'none' : 'lax'),
+    sameSite: NODE_ENV === 'production' ? 'none' : 'lax',
   };
 
   res.cookie('token', token, cookieOptions);
