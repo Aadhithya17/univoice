@@ -20,7 +20,7 @@ const sendTokenResponse = (user: any, statusCode: number, res: Response) => {
     expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
     httpOnly: true,
     secure: NODE_ENV === 'production',
-    sameSite: 'lax' as const,
+    sameSite: (NODE_ENV === 'production' ? 'none' : 'lax'),
   };
 
   res.cookie('token', token, cookieOptions);
